@@ -4,9 +4,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
   form.addEventListener('submit', function (event) {
     event.preventDefault();
+
+    var recipient = 'jamillahairconrefservices@gmail.com';
+    var name = form.elements.name.value.trim();
+    var email = form.elements.email.value.trim();
+    var address = form.elements.address.value.trim();
+    var phone = form.elements.phone.value.trim();
+    var message = form.elements.message.value.trim();
+
     var button = form.querySelector('button[type="submit"]');
-    button.textContent = 'Message Sent';
+    button.textContent = 'Opening Email...';
     button.disabled = true;
+
+    var subject = 'Service Inquiry from ' + (name || 'Website Visitor');
+    var body = [
+      'Name: ' + name,
+      'Email: ' + email,
+      'Address: ' + address,
+      'Phone: ' + phone,
+      '',
+      'Message:',
+      message,
+      '',
+      'Sent from Jamillah Aircon & Refrigerator Services website.'
+    ].join('\n');
+
+    var mailto = 'mailto:' + recipient +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+
     setTimeout(function () {
       button.textContent = 'Send Message';
       button.disabled = false;
